@@ -142,8 +142,7 @@ levels(FactorAgeDat1)
 write.csv(AgeDat1, "AgeDat1.csv", row.names = FALSE)
 AgeDat1 = read.csv("AgeDat1.csv", header = TRUE, na.strings = c(""))
 AgeDat1 = as.data.frame(AgeDat1)
-AgeDat1[97,]
-AgeDat1 = as.data.frame(AgeDat1[-c(169),])
+AgeDat1 = as.data.frame(AgeDat1[-c(170),])
 AgeDat1 = apply(AgeDat1,2, function(x){ifelse(x <=30, "30 or younger", ifelse(x <= 40, "31 to 40 years old", ifelse(x <= 50, "41 to 50 years old", ifelse(x <= 80, "51 or older", x))))})
 colnames(AgeDat1) = c("Age")
 AgeCount =count(AgeDat1, 'Age'); head(AgeCount)
@@ -174,7 +173,7 @@ write.csv(EthCount, "EthCountFull.csv", row.names = FALSE)
 ```
 Ethical Dilemia Question
 ```{r}
-EthDilemDat1 = dat1
+EthDilemDat1 = dat1$EthDilem
 write.csv(dat1, "EthDilemDat1.csv", row.names = FALSE)
 EthDilemDat1 = as.data.frame(read.csv("EthDilemDat1.csv", header= TRUE, na.strings = c("")))
 EthDilemDat1 = as.data.frame(EthDilemDat1$EthDilem)
@@ -207,6 +206,19 @@ n = sum(TrainingCount$freq)
 TrainingCount$Per = round(TrainingCount$freq/n, 3)
 TrainingCount
 write.csv(TrainingCount, "TrainingCountFull.csv", row.names = FALSE)
+```
+Now we want to place everything into one excel file
+```{r}
+library(xlsx)
+write.xlsx(EduCount, file="EthicsFull.xlsx", sheetName="EduCount", row.names=FALSE)
+write.xlsx(StateCount, file="EthicsFull.xlsx", sheetName="StateCount", append=TRUE, row.names=FALSE)
+write.xlsx(WorkSettingCount, file="EthicsFull.xlsx", sheetName="WorkSettingCount", append=TRUE, row.names=FALSE)
+write.xlsx(YearsExperCount, file="EthicsFull.xlsx", sheetName="YearsExperCount", append=TRUE, row.names=FALSE)
+write.xlsx(GenderCount, file="EthicsFull.xlsx", sheetName="GenderCount", append=TRUE, row.names=FALSE)
+write.xlsx(AgeCount, file="EthicsFull.xlsx", sheetName="AgeCount", append=TRUE, row.names=FALSE)
+write.xlsx(EthCount, file="EthicsFull.xlsx", sheetName="EthCount", append=TRUE, row.names=FALSE)
+write.xlsx(EthDilemCount, file="EthicsFull.xlsx", sheetName="EthDilemCount", append=TRUE, row.names=FALSE)
+write.xlsx(TrainingCount, file="EthicsFull.xlsx", sheetName="TrainingCount", append=TRUE, row.names=FALSE)
 ```
 
 
